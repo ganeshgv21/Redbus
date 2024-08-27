@@ -147,8 +147,6 @@ try:
         except NoSuchElementException:
             print("ERROR while collecting bus elements")
 
-    route_names = []
-    route_links = []
 
     collect_route_details()
     
@@ -229,3 +227,80 @@ finally:
     time.sleep(21)
     driver.quit()  # final error check 
 ```
+
+#### 2.code for push csv to sql 
+Sqlalchamy  is used  For pushing data to sql here. 
+```py
+import pandas as pd
+from sqlalchemy import create_engine, Table, Column, Integer, String, Float, Time, MetaData
+from sqlalchemy.sql import text  # these are required packages  & modules 
+
+engine = create_engine('mysql+mysqlconnector://root:12345678@localhost/')   # create the sqlalchamy engine to connect to mysql db
+
+with engine.connect() as conn:
+    conn.execute(text("CREATE DATABASE IF NOT EXISTS red_bus"))   # connect to the mysql db and create a new database if it doesn't exist
+
+engine = create_engine('mysql+mysqlconnector://root:12345678@localhost/red_bus')   # Update the engine to connect to the newly created 'red_bus' database
+
+df = pd.read_csv(r"C:\Users\GANESH\OneDrive\Desktop\Red_Bus\APSRTC.csv")   # Read the CSV file containing bus data into a Pandas DataFrame
+
+
+df_cleaned = df.dropna()   # Drop rows if the row has 'NONE' in the DataFrame
+
+
+df_cleaned.columns = [
+    'route_name',  
+    'route_link',  
+    'busname',    
+    'bustype',     
+    'departing_time', 
+    'duration',   
+    'reaching_time',
+    'star_rating', 
+    'price',     
+    'seats_available'
+]    # Rename the columns of the DataFrame same like database columns  
+
+
+metadata = MetaData()   # initialize the metadata object, which will contain table definitions
+
+
+bus_routes_table = Table(
+    'bus_routes', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('route_name', String(255)),
+    Column('route_link', String(255)), 
+    Column('busname', String(255)),   
+    Column('bustype', String(50)),    
+    Column('departing_time', Time),    
+    Column('duration', String(50)),  
+    Column('reaching_time', Time),    
+    Column('star_rating', Float),     
+    Column('price', Float),           
+    Column('seats_available', Integer) 
+)   # defining the 'bus_routes' table with columns matching the cleaned DataFrame
+
+
+with engine.connect() as conn:
+    metadata.create_all(conn)   # Create the 'bus_routes' table in the 'red_bus' database if it doesn't already exist
+
+
+df_cleaned.to_sql('bus_routes', con=engine, if_exists='append', index=False)   # inserting the cleaned DataFrame data into the 'bus_routes' table, appending to existing data
+
+
+with engine.connect() as conn:
+    result = conn.execute(text('SELECT * FROM bus_routes LIMIT 10'))
+    rows = result.fetchall()
+    for row in rows:   # to check the data inserting by printing the first 10 rows from the 'bus_routes' table
+
+        print(row)  # Print 10 rows from the database to check
+
+print("Data insert is done")  # Print a confirmation message after data insertion
+
+```
+```py
+
+```
+
+
+
