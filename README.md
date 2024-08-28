@@ -348,7 +348,7 @@ if 'Non-AC' in bus_type_sidebar:
          OR bustype LIKE '%Non A/C%' 
          OR bustype LIKE '%Non AC%' 
          OR bustype LIKE '%NON AC%')
-    """)  # This query helps to filter the data for route_name using the LIKE SQL query condition
+    """)  # This query helps to filter the data for route_name using the LIKE SQL query condition in the side bar
 
 where_clause = " OR ".join(bus_types_query)
 query = f"""
@@ -356,16 +356,15 @@ query = f"""
     WHERE route_name = :route_name
     AND star_rating BETWEEN :min_rating AND :max_rating
     AND price BETWEEN :min_price AND :max_price
-"""  # here where clause is used to join all sql condtions except 
+"""  # here where clause is used to join (bus type query) with other sql query except depature_time  
 
 if where_clause:
     query += f" AND ({where_clause})"
-
 departure_from = departure_time_slider[0].strftime("%H:%M")
 departure_upto = departure_time_slider[1].strftime("%H:%M")
-
 query += " AND TIME_FORMAT(departing_time, '%H:%i') BETWEEN :departure_from AND :departure_upto"
-
+   # snippet will add previous query with this query of bus depature time  after formats the selected times into the H:M format required by SQL
+ 
 params.update({
     'min_rating': star_rating_slider[0],
     'max_rating': star_rating_slider[1],
@@ -373,27 +372,26 @@ params.update({
     'max_price': price_sidebar_slider[1],
     'departure_from': departure_from,
     'departure_upto': departure_upto
-})
+}) # here the params of price_slider & depature_time will added 
 
 if st.sidebar.button('Submit'):
     try:
-        data = pd.read_sql(text(query), engine, params=params)
+        data = pd.read_sql(text(query), engine, params=params) # if 'submit' button pressed it will it trigger all query & display results in ditionary by pandas DF
         
-        # Format time fields
         def format_time(td):
             if pd.notnull(td):
                 total_seconds = td.total_seconds()
                 hours = int(total_seconds // 3600)
                 minutes = int((total_seconds % 3600) // 60)
                 return f"{hours:02}:{minutes:02}"
-            return None
+            return None  # this code for convert the time foramt "H:M:S"  to "H:M" using 'timedelta' 
 
         data['departing_time'] = data['departing_time'].apply(format_time)
-        data['reaching_time'] = data['reaching_time'].apply(format_time)
+        data['reaching_time'] = data['reaching_time'].apply(format_time)  # these line will apply the format_time function in data of depture,reaching times shows as "H:M" 
         
-        st.write(data)
-    except Exception as e:
-        st.error(f"Error executing query: {e}")
+        st.write(data) # gives the final results
+    except:
+        st.error(final error")  
 
 ```
 
