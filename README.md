@@ -1,8 +1,8 @@
 # Redbus
-## Overview
-This projects aims to scrape bus deatails using 'SELENIUM' ,store it in the database and display it by using  'STREAMLIT' web app applying filters  
+## Project Overview
+Scrape bus details using Selenium, store the data in a MySQL database, and display it with filtering options in a Streamlit web app.
 
-###  Objects
+###  Objectives 
 The main objective of my project is to:  
 1.Scrape Bus Details: Use Selenium to collect bus information
 2.Store Data: Save the collected data into a SQL database. 
@@ -15,6 +15,7 @@ The main objective of my project is to:
 
 # CODE EXPLANATION
 #### 1.code for scrape:
+The code navigates to the RedBus website, switches to the appropriate windows, and scrapes details such as route names, bus types, departure times, and more. It handles various exceptions to ensure robust data collection, and stores the results in a CSV file (APSRTC.csv).
 ```py
 import time
 import numpy as np
@@ -229,7 +230,7 @@ finally:
 ```
 
 #### 2.code for push csv to sql 
-Sqlalchamy  is used  For pushing data to sql here. 
+This script reads the CSV file, cleans the data by dropping any rows with missing values, and defines the schema for the bus_routes table in the MySQL database. It then inserts the cleaned data into the table.
 ```py
 import pandas as pd
 from sqlalchemy import create_engine, Table, Column, Integer, String, Float, Time, MetaData
@@ -299,7 +300,7 @@ print("Data insert is done")  # Print a confirmation message after data insertio
 
 ```
 #### 3.code for streamlit web app
-
+The Streamlit app connects to the MySQL database and provides users with sidebar filters for selecting bus routes, types, departure times, star ratings, and price ranges. The selected options are used to query the database, and the results are displayed within the app.
 ```py
 import streamlit as st  # for streatlit
 import pandas as pd   #to show results in dataframe
