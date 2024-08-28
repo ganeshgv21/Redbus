@@ -1,6 +1,6 @@
 # Redbus
 ## Project Overview
-Scrape bus details using Selenium, store the data in a MySQL database, and display it with filtering options in a Streamlit web app.
+The problem at hand is the need for an efficient way to extract, store, and dynamically filter bus data from the RedBus website, such as bus names, bus types, departure times, star ratings, and prices. Users often struggle to quickly find the most suitable bus for their needs. The goal is to streamline this process by automating data collection and providing a user-friendly interface for filtering and exploring bus options
 
 ###  Objectives 
 The main objective of my project is to:  
