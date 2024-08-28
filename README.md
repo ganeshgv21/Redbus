@@ -13,6 +13,17 @@ The main objective of my project is to:
 - MySql - Store data
 - Streamlit -  Display the stored data using filters
 
+## Explanation of project
+#### 1.web scrapping using selenium  
+straing bu using selenium ,the web scrape tool used to extract the bus details from redbus website. this involved such as busname,bustype,routename,routelink,
+depature&reaching time, price,star rating and seats availability by automating the process 
+
+#### 2. store the data to mysql using sqlalchamy 
+after collecting the data , to store in mysql i used sqlalchamy to interact with mysql schema and also hold scrapped data in strutured table .this setup wiil efficiently querying and and retrive of specific data points .
+
+#### 3. dynamic filter with streamlit 
+the final part of project was building a interactive web app using streamlit . this is used to filter bus options based on criteria such as routename,bustype,cepature time,stat rating and price . this filters are used to quickly get the results and that best meets customer needs   
+
 # CODE EXPLANATION
 #### 1.code for scrape:
 The code navigates to the RedBus website, switches to the appropriate windows, and scrapes details such as route names, bus types, departure times, and more. It handles various exceptions to ensure robust data collection, and stores the results in a CSV file (APSRTC.csv).
