@@ -163,7 +163,9 @@ try:
     collect_route_details()
     
     print('Collected route names')
-    print('Collected route links')   #The function collects bus details for a each route by first finding all bus elements in the page. It then iterates through each bus element, extracting information such as bus name, type, departure time, and price, and stores these details in a list. also, it initializes lists to keep track of route names and their corresponding links and calls a function to gather and process route details, including collecting bus data for each route.
+    print('Collected route links')   #The function collects bus details for a each route by first finding all bus elements in the page. It then iterates through each bus element, extracting information such as 
+ #bus name, type, departure time, and price, and stores these details in a list. also, it initializes lists to keep track of route names and their corresponding links and calls a function to gather and process 
+ #route details, including collecting bus data for each route.
 
 
     def scroll_upto_down():
