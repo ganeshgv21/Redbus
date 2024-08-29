@@ -217,9 +217,6 @@ try:
                     len(viewbuses_button) == 0
                     print('Found no button')
                     time.sleep(10)
-                    next_day_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "icon.icon-right"))).click()
-                    print('Clicked next day button')
-                    time.sleep(2)
                     scroll_upto_down()
                     print('Scrolled up to down')
                     collect_bus_elements(route_name, route_link)
