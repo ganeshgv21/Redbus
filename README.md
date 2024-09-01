@@ -27,6 +27,10 @@ the final part of project was building a interactive web app using streamlit . t
 # CODE EXPLANATION
 #### 1.code for scrape:
 The code navigates to the RedBus website, switches to the appropriate windows, and scrapes details such as route names, bus types, departure times, and more. It handles various exceptions to ensure robust data collection, and stores the results in a CSV file (APSRTC.csv).
+You can use this code scrape other RTC pages with two changes thar are  
+1. change the apsrtc link instead of place the rtcname's link text by finding it in website   and
+2. 2.change the name of csv file (if its in name because data will overwritten ) 
+
 ```py
 import time
 import numpy as np
@@ -238,7 +242,7 @@ finally:
     time.sleep(21)
     driver.quit()  # final error check 
 ```
-
+  
 #### 2.code for push csv to sql 
 This script reads the CSV file, cleans the data by dropping any rows with missing values, and defines the schema for the bus_routes table in the MySQL database. It then inserts the cleaned data into the table.
 ```py
